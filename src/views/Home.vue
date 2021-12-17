@@ -1,5 +1,6 @@
 <template>
-  <div class="container mt-5">
+<div>
+  <div class="container mt-5" style="min-height: 80vh;">
     <div class="row" style="justify-content: center;">
       <form @submit.prevent="addNote">
         <input class="bg-light rounded" type="text" style="min-height: 36px;" v-model="title" id="title" placeholder="Create a note">
@@ -35,8 +36,8 @@
         </div>
       </div>
     </div>
-
   </div>
+</div>
 </template>
 
 <script>
@@ -91,7 +92,6 @@ export default {
     }
   },
   created: function () {
-    console.log(this.$cookie, 'COOKIE');
     this.$store.dispatch('getNotes')
       .then(() => {
         this.fresh = this.freshNotes

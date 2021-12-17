@@ -1,15 +1,15 @@
 <template>
   <div id="app">
     <Navbar v-if="isLoggedIn" @logout="logout"></Navbar>
-    <router-view style="min-height: 80vh;"/>
-    <Footer></Footer>
+    <router-view/>
+    <Footer v-if="isLoggedIn"></Footer>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue'
-import Swal from 'sweetalert2'
 import Footer from 'vue-hacktiv8-footer'
+import Swal from 'sweetalert2'
 export default {
   name: 'App',
   components: {
