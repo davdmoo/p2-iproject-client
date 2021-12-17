@@ -1,17 +1,20 @@
 <template>
   <div id="app">
     <Navbar v-if="isLoggedIn" @logout="logout"></Navbar>
-    <router-view/>
+    <router-view style="min-height: 80vh;"/>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue'
 import Swal from 'sweetalert2'
+import Footer from 'vue-hacktiv8-footer'
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    Footer
   },
   created: function () {
     if (localStorage.access_token) {
