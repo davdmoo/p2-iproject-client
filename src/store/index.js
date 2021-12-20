@@ -3,6 +3,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Swal from 'sweetalert2'
 let baseURL = 'https://halita-kanban.herokuapp.com'
+// let baseURL = 'http://localhost:8000'
 
 Vue.use(Vuex)
 
@@ -68,8 +69,8 @@ export default new Vuex.Store({
           .then(() => {
             Swal.fire({
               icon: 'success',
-              title: 'Hello!',
-              text: 'Welcome to the club!'
+              title: 'Welcome to the club!',
+              text: 'We have emailed you a warm welcome. Go check it out!'
             })
             resolve()
           })
@@ -230,6 +231,30 @@ export default new Vuex.Store({
               text: error.response.data.message
             })
             reject(error)
+          })
+      })
+    },
+    authGithub: function (context, payload) {
+      return new Promise((resolve, reject) => {
+        axios({
+          url: `${baseURL}/login/auth-github`,
+          method: 'post',
+          data: {
+            code: payload.code
+          }
+        })
+          .then(resp => {
+            localStorage.setItem('access_token', resp.data.access_token)
+            context.commit('SET_LOGIN', true)
+            Swal.fire({
+              icon: 'success',
+              title: 'Hello!',
+              text: `Welcome back!`
+            })
+            resolve()
+          })
+          .catch(err => {
+            reject(err)
           })
       })
     }

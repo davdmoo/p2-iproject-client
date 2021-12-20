@@ -1,5 +1,6 @@
 <template>
-  <div class="container mt-5">
+<div>
+  <div class="container mt-5" style="min-height: 80vh;">
     <div class="row" style="justify-content: center;">
       <form @submit.prevent="addNote">
         <input class="bg-light rounded" type="text" style="min-height: 36px;" v-model="title" id="title" placeholder="Create a note">
@@ -11,7 +12,7 @@
       <div class="col-md-4">
         <div class="p-2 alert alert-primary">
           <h4 style="text-align: center; margin-top: 5px;">Fresh</h4>
-            <draggable id="Fresh" class="list-group" :move="onMove" :list="fresh" group="notes">
+            <draggable id="Fresh" class="list-group Fresh" :move="onMove" :list="fresh" group="notes">
               <div class="list-group-item Fresh" v-for="item in fresh" :key="item.id">{{ item.title }}</div>
             </draggable>
         </div>
@@ -20,7 +21,7 @@
       <div class="col-md-4">
         <div class="p-2 alert alert-warning">
           <h4 style="text-align: center; margin-top: 5px;">In Progress</h4>
-            <draggable id="inProgress" class="list-group" :list="inProgress" :move="onMove" group="notes">
+            <draggable id="inProgress" class="list-group inProgress" :list="inProgress" :move="onMove" group="notes">
               <div class="list-group-item inProgress" v-for="item in inProgress" :key="item.id">{{ item.title }}</div>
             </draggable>
         </div>
@@ -29,14 +30,14 @@
       <div class="col-md-4">
         <div class="p-2 alert alert-success">
           <h4 style="text-align: center; margin-top: 5px;">Done</h4>
-            <draggable id="Done" :move="onMove" class="list-group" :list="done" group="notes">
+            <draggable id="Done" :move="onMove" class="list-group Done" :list="done" group="notes">
               <div class="list-group-item Done" v-for="item in done" :key="item.id">{{ item.title }}</div>
             </draggable>
         </div>
       </div>
     </div>
-
   </div>
+</div>
 </template>
 
 <script>
@@ -77,8 +78,13 @@ export default {
     onMove: function (payload, payload2) {
       const noteId = payload.draggedContext.element.id
       const oldStatus = payload.draggedContext.element.status
-      const newStatus = payload2.originalTarget.className.split(' ')[1] || payload2.originalTarget.id
-      
+      let newStatus
+      if (!payload2.originalTarget) {
+        newStatus = payload2.target.id || payload2.target.className.split(' ')[1]
+      } else {
+        newStatus = payload2.originalTarget.className.split(' ')[1] || payload2.originalTarget.id
+      }
+
       if (oldStatus !== newStatus) {
         this.$store.dispatch('patchNote', {
           id: noteId,

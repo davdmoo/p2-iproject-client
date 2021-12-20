@@ -17,10 +17,13 @@
     "axios": "^0.24.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "sweetalert2": "^11.3.0",
     "vue": "^2.6.14",
     "vue-authenticate": "^1.5.0",
+    "vue-axios-cors": "^1.0.1",
     "vue-google-login": "^2.0.5",
+    "vue-hacktiv8-footer": "^0.0.9",
     "vue-router": "^3.2.0",
     "vuedraggable": "^2.24.3",
     "vuex": "^3.6.2"

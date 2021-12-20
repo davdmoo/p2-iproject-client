@@ -2,16 +2,19 @@
   <div id="app">
     <Navbar v-if="isLoggedIn" @logout="logout"></Navbar>
     <router-view/>
+    <Footer v-if="isLoggedIn"></Footer>
   </div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue'
+import Footer from 'vue-hacktiv8-footer'
 import Swal from 'sweetalert2'
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    Footer
   },
   created: function () {
     if (localStorage.access_token) {
@@ -26,12 +29,7 @@ export default {
   methods: {
     logout: function () {
       localStorage.clear()
-      /* eslint-disable */
-      const auth2 = gapi.auth2.getAuthInstance()
-      auth2.signOut().then(function () {
-        Swal.fire('You have signed out.')
-      })
-      /* eslint-enable */
+      Swal.fire('You have signed out.')
       this.$store.commit('SET_LOGIN')
       this.$router.push('login')
     }
